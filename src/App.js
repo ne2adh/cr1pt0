@@ -1,23 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
+import SimetricoForm from './SimetricoForm';
+import ASimetricoForm from './ASimetricoForm';
 
 function App() {
-  return (
+    return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <header className="App-header">        
         <p>
-         Esta es mi aplicacion Giancarlo Delgadillo Coca
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+         Aplicacion realizada por Giancarlo Delgadillo Coca <span style={{fontSize: '14px', color: 'aqua'}}> (giancarlodcwork@gmail.com) </span>
+        </p>       
       </header>
+      <SimetricoForm />
+      <ASimetricoForm />
     </div>
   );
 }
