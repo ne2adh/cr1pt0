@@ -30,45 +30,79 @@ class SimetricoForm extends React.Component {
         super(props);
         this.state = {
           clave_secreta: 'EJEMPLO DE CIFRADO SIMETRICO AES',
-          texto: 'HOLA MUNDO',
+          clave_secreta1: 'EJEMPLO DE CIFRADO SIMETRICO AES',
+          mensaje: 'HOLA MUNDO',
+          texto_encriptado_result: '',
           texto_encriptado: '',
           texto_descifrado: '',
         };
   
       this.handleChangeClaveSecreta = this.handleChangeClaveSecreta.bind(this);
-      this.handleChangeTexto = this.handleChangeTexto.bind(this);
+      this.handleChangeClaveSecreta1 = this.handleChangeClaveSecreta1.bind(this);
+      this.handleChangeTextoCifrado = this.handleChangeTextoCifrado.bind(this);
+      this.handleChangeTextoDescifrado = this.handleChangeTextoDescifrado.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleSubmit2 = this.handleSubmit2.bind(this);
     }
   
     handleChangeClaveSecreta(event) {
       this.setState({clave_secreta: event.target.value});
     }
+    handleChangeClaveSecreta1(event) {
+      this.setState({clave_secreta1: event.target.value});
+    }
 
-    handleChangeTexto(event) {
-      this.setState({texto: event.target.value});
+    handleChangeTextoCifrado(event) {
+      this.setState({mensaje: event.target.value});
+    }
+
+    handleChangeTextoDescifrado(event) {
+      this.setState({texto_encriptado: event.target.value});
     }
   
     handleSubmit(event) {        
-        if((this.state.clave_secreta.length === 32) && this.state.texto.length > 1){
-            SECRET_KEY = Buffer.from(this.state.clave_secreta).toString('base64');
-            ENCRYPTION_KEY = Buffer.from(SECRET_KEY, 'base64');
-            let a = encrypt(this.state.texto);
-            let b = decrypt(a);
-            this.setState({ texto_encriptado: a, texto_descifrado: b});
-            console.log(a, b);     
+        if((this.state.clave_secreta.length === 32) && this.state.mensaje.length > 1){
+            try {              
+              SECRET_KEY = Buffer.from(this.state.clave_secreta).toString('base64');
+              ENCRYPTION_KEY = Buffer.from(SECRET_KEY, 'base64');
+              let a = encrypt(this.state.mensaje);
+              this.setState({ texto_encriptado_result: a});
+              console.log(a);     
+            } catch (error) {
+              alert(error);
+            }
         }
         else
             alert('la palabra clave: ' + this.state.clave_secreta + ' debe tener, 32 caracteres, \n y debe introducir un texto. ');
         
       event.preventDefault();
     }
+
+    handleSubmit2(event) {        
+      if((this.state.clave_secreta1.length === 32) && this.state.texto_encriptado.length > 1){
+        try {
+          SECRET_KEY = Buffer.from(this.state.clave_secreta1).toString('base64');
+          ENCRYPTION_KEY = Buffer.from(SECRET_KEY, 'base64');         
+          let b = decrypt(this.state.texto_encriptado.trim());
+          this.setState({texto_descifrado: b});
+          console.log(b);
+        } catch (error) {
+          alert(error);
+        }            
+      }
+      else
+      alert('la palabra clave: ' + this.state.clave_secreta1 + ' debe tener, 32 caracteres, \n y debe introducir un texto. ');
+      
+      event.preventDefault();
+    }
   
     render() {
       return (
+        <>
         <form onSubmit={this.handleSubmit}>
           <div style={{display: 'inline-block'}}>
             <h1>CIFRADO / DESCIFRADO</h1>
-            <h4>Por el algoritmo AES (cifrado asimetrico)</h4>
+            <h4>Por el algoritmo AES (cifrado simetrico)</h4>
             <div style={{display: 'flex', flexDirection: 'column', alignItems:'flex-start'}}>
                 <div style={{padding: '8px' }}>
                     <label>
@@ -79,23 +113,44 @@ class SimetricoForm extends React.Component {
                 </div>
                 <div style={{padding: '8px' }}>
                     <label>
-                        Texto a cifrar:
-                        <textarea value={this.state.texto} onChange={this.handleChangeTexto} rows={5} cols={80} style={{marginLeft: '8px'}}/>
+                        Mensaje a cifrar:
+                        <textarea value={this.state.mensaje} onChange={this.handleChangeTextoCifrado} rows={5} cols={80} style={{marginLeft: '8px'}}/>
                     </label>
                     <br  />
                     <span>
-                      Texto cifrado:<pre>{`${this.state.texto_encriptado} `}</pre>                      
+                      Mensaje cifrado:<pre>{`${this.state.texto_encriptado_result.trim()}`}</pre>                      
                     </span>
+                </div>
+            </div>            
+              <input type="submit" value="Cifrar" />
+          </div>
+        </form>
+          <hr />
+        <form onSubmit={this.handleSubmit2}>
+          <div style={{display: 'inline-block'}}>  
+              <div style={{display: 'flex', flexDirection: 'column', alignItems:'flex-start'}}>
+                <div style={{padding: '8px' }}>
+                    <label>
+                        Palabra Clave:
+                        <input type="text" value={this.state.clave_secreta1} onChange={this.handleChangeClaveSecreta1} style={{width: '280px', marginLeft: '8px'}} />
+                        <span style={{fontSize: '10px'}}> ( 256 bits, 32 caracteres)</span>
+                    </label>
+                </div>
+                <div style={{padding: '8px' }}>
+                    <label>
+                        Mensaje a descifrar:
+                        <textarea value={this.state.texto_encriptado} onChange={this.handleChangeTextoDescifrado} rows={5} cols={80} style={{marginLeft: '8px'}}/>
+                    </label>
+                    <br  />
                     <span>
-                    Texto descifrado:
-                        <pre style={{color: 'red'}}>{`${this.state.texto_descifrado} `}</pre>
+                        Mensaje descifrado:<pre>{`${this.state.texto_descifrado} `}</pre>                      
                     </span>
                 </div>
             </div>
-            <hr />
-            <input type="submit" value="Generar" />
-            </div>
+              <input type="submit" value="Descifrar" />
+          </div>
         </form>
+        </>
       );
     }
   }
