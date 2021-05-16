@@ -1,7 +1,7 @@
 import React from 'react';
 
  /* ALGORITMO EXTRAIDO DE:  */
-const crypto = require('crypto');
+//const crypto = require('crypto');
 /* const path = require('path')
 const fs = require('fs')
 
@@ -68,22 +68,17 @@ class ASimetricoForm extends React.Component {
     handleSubmit(event) { 
       event.preventDefault();       
         if((this.state.clave_publica.length > 0 ) && (this.state.clave_privada.length > 0 ) && (this.state.texto.length > 1)){         
-            /* encrypt */
-            const public_key = this.state.clave_publica;
-            const buffer_enc = Buffer.from(this.state.texto, 'utf8');
-             const encrypted = crypto.publicEncrypt(public_key, buffer_enc);            
-            const enc = encrypted.toString('base64');
-            this.setState({texto_encriptado: enc});
-          /* decrypt */
-            const private_key = this.state.clave_privada;
-            const buffer = Buffer.from(this.state.texto_encriptado, 'base64');
-            const decrypted = crypto.privateDecrypt({
-              key: private_key.toString(),
-              passphrase: '',
-              padding:crypto.constants.RSA_NO_PADDING
-            }, buffer);
-            const des = decrypted.toString('utf8');
-            this.setState({texto_descifrado: des});
+            
+          const NodeRSA = require('node-rsa');
+          const key = new NodeRSA(this.state.clave_publica);          
+          const text = this.state.texto;
+          const encrypted = key.encrypt(text, 'base64');
+          console.log('encrypted: ', encrypted);
+          this.setState({texto_encriptado: encrypted.toString('base64')});
+          const key1 = new NodeRSA(this.state.clave_privada);
+          const decrypted = key1.decrypt(encrypted, 'utf8');
+          this.setState({texto_descifrado: decrypted});
+          console.log('decrypted: ', decrypted.toString('utf8')); 
         }
         else
             alert('Se debe cargar tando la clave publica y privada (para los fines didacticos) \n y debe introducir un texto. ');
