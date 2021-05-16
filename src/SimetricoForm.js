@@ -98,9 +98,8 @@ class SimetricoForm extends React.Component {
   
     render() {
       return (
-        <div style={{display: 'inline-block'}}>
-          <h1>CIFRADO / DESCIFRADO</h1>
-            <h4>Por el algoritmo AES (cifrado simetrico)</h4>
+        <div style={{display: 'inline-block'}}>          
+            <h2>Algoritmo AES (cifrado simetrico)</h2>
           <div style={{display: 'flex', flexDirection: 'row'}}>
           <form onSubmit={this.handleSubmit}>
             <div style={{display: 'inline-block'}}>            
@@ -115,7 +114,7 @@ class SimetricoForm extends React.Component {
                   <div style={{padding: '8px' }}>
                       <label>
                           Mensaje a cifrar:
-                          <textarea value={this.state.mensaje} onChange={this.handleChangeTextoCifrado} rows={5} cols={80} style={{marginLeft: '8px'}}/>
+                          <textarea value={this.state.mensaje} onChange={this.handleChangeTextoCifrado} rows={5} cols={50} style={{marginLeft: '8px'}}/>
                       </label>
                       <br  />
                       <span>
@@ -139,7 +138,7 @@ class SimetricoForm extends React.Component {
                   <div style={{padding: '8px' }}>
                       <label>
                           Mensaje a descifrar:
-                          <textarea value={this.state.texto_encriptado} onChange={this.handleChangeTextoDescifrado} rows={5} cols={80} style={{marginLeft: '8px'}}/>
+                          <textarea value={this.state.texto_encriptado} onChange={this.handleChangeTextoDescifrado} rows={5} cols={50} style={{marginLeft: '8px'}}/>
                       </label>
                       <br  />
                       <span>
