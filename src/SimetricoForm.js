@@ -98,59 +98,60 @@ class SimetricoForm extends React.Component {
   
     render() {
       return (
-        <>
-        <form onSubmit={this.handleSubmit}>
-          <div style={{display: 'inline-block'}}>
-            <h1>CIFRADO / DESCIFRADO</h1>
+        <div style={{display: 'inline-block'}}>
+          <h1>CIFRADO / DESCIFRADO</h1>
             <h4>Por el algoritmo AES (cifrado simetrico)</h4>
-            <div style={{display: 'flex', flexDirection: 'column', alignItems:'flex-start'}}>
-                <div style={{padding: '8px' }}>
-                    <label>
-                        Palabra Clave:
-                        <input type="text" value={this.state.clave_secreta} onChange={this.handleChangeClaveSecreta} style={{width: '280px', marginLeft: '8px'}} />
-                        <span style={{fontSize: '10px'}}> ( 256 bits, 32 caracteres)</span>
-                    </label>
-                </div>
-                <div style={{padding: '8px' }}>
-                    <label>
-                        Mensaje a cifrar:
-                        <textarea value={this.state.mensaje} onChange={this.handleChangeTextoCifrado} rows={5} cols={80} style={{marginLeft: '8px'}}/>
-                    </label>
-                    <br  />
-                    <span>
-                      Mensaje cifrado:<pre>{`${this.state.texto_encriptado_result.trim()}`}</pre>                      
-                    </span>
-                </div>
-            </div>            
-              <input type="submit" value="Cifrar" />
-          </div>
-        </form>
-          <hr />
-        <form onSubmit={this.handleSubmit2}>
-          <div style={{display: 'inline-block'}}>  
+          <div style={{display: 'flex', flexDirection: 'row'}}>
+          <form onSubmit={this.handleSubmit}>
+            <div style={{display: 'inline-block'}}>            
               <div style={{display: 'flex', flexDirection: 'column', alignItems:'flex-start'}}>
-                <div style={{padding: '8px' }}>
-                    <label>
-                        Palabra Clave:
-                        <input type="text" value={this.state.clave_secreta1} onChange={this.handleChangeClaveSecreta1} style={{width: '280px', marginLeft: '8px'}} />
-                        <span style={{fontSize: '10px'}}> ( 256 bits, 32 caracteres)</span>
-                    </label>
-                </div>
-                <div style={{padding: '8px' }}>
-                    <label>
-                        Mensaje a descifrar:
-                        <textarea value={this.state.texto_encriptado} onChange={this.handleChangeTextoDescifrado} rows={5} cols={80} style={{marginLeft: '8px'}}/>
-                    </label>
-                    <br  />
-                    <span>
-                        Mensaje descifrado:<pre>{`${this.state.texto_descifrado} `}</pre>                      
-                    </span>
-                </div>
+                  <div style={{padding: '8px' }}>
+                      <label>
+                          Palabra Clave:
+                          <input type="text" value={this.state.clave_secreta} onChange={this.handleChangeClaveSecreta} style={{width: '280px', marginLeft: '8px'}} />
+                          <span style={{fontSize: '10px'}}> ( 256 bits, 32 caracteres)</span>
+                      </label>
+                  </div>
+                  <div style={{padding: '8px' }}>
+                      <label>
+                          Mensaje a cifrar:
+                          <textarea value={this.state.mensaje} onChange={this.handleChangeTextoCifrado} rows={5} cols={80} style={{marginLeft: '8px'}}/>
+                      </label>
+                      <br  />
+                      <span>
+                        Mensaje cifrado:<pre>{`${this.state.texto_encriptado_result.trim()}`}</pre>                      
+                      </span>
+                  </div>
+              </div>            
+                <input type="submit" value="Cifrar" />
             </div>
-              <input type="submit" value="Descifrar" />
+          </form>
+          <form onSubmit={this.handleSubmit2}>
+            <div style={{display: 'inline-block'}}>  
+                <div style={{display: 'flex', flexDirection: 'column', alignItems:'flex-start'}}>
+                  <div style={{padding: '8px' }}>
+                      <label>
+                          Palabra Clave:
+                          <input type="text" value={this.state.clave_secreta1} onChange={this.handleChangeClaveSecreta1} style={{width: '280px', marginLeft: '8px'}} />
+                          <span style={{fontSize: '10px'}}> ( 256 bits, 32 caracteres)</span>
+                      </label>
+                  </div>
+                  <div style={{padding: '8px' }}>
+                      <label>
+                          Mensaje a descifrar:
+                          <textarea value={this.state.texto_encriptado} onChange={this.handleChangeTextoDescifrado} rows={5} cols={80} style={{marginLeft: '8px'}}/>
+                      </label>
+                      <br  />
+                      <span>
+                          Mensaje descifrado:<pre>{`${this.state.texto_descifrado} `}</pre>                      
+                      </span>
+                  </div>
+              </div>
+                <input type="submit" value="Descifrar" />
+            </div>
+          </form>
           </div>
-        </form>
-        </>
+        </div>
       );
     }
   }
